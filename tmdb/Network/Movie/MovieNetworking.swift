@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum MovieNetworking {
-    case upcoming
+    case upcoming(page:Int)
     case nowPlaying
     case movieDetail(id:Int)
 }
@@ -22,8 +22,8 @@ extension MovieNetworking: TargetType {
     
     var path: String {
         switch self {
-        case .upcoming:
-            return "movie/upcoming?api_key=\(Configuration.apiKey)"
+        case .upcoming(let page):
+            return "movie/upcoming?api_key=\(Configuration.apiKey)&page=\(page)"
         case .nowPlaying:
             return "movie/upcoming?api_key=\(Configuration.apiKey)"
         case .movieDetail(let id):

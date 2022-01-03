@@ -8,21 +8,21 @@
 import Foundation
 
 protocol MovieAPIProtocol {
-    func upcoming(completionHandler: @escaping (Result< GenericResponse<[Movie]>, NSError>) -> Void)
+    func upcoming(page:Int,completionHandler: @escaping (Result< GenericResponse<[Movie]>, NSError>) -> Void)
     func nowPlaying(completionHandler: @escaping (Result< GenericResponse<[Movie]>, NSError>) -> Void)
     func getMovieDetail(id:Int,completionHandler: @escaping (Result<Movie,NSError >) -> Void)
 
 }
 
 class MovieAPI: BaseAPI<MovieNetworking>, MovieAPIProtocol {
-    func upcoming(completionHandler: @escaping (Result<GenericResponse<[Movie]>, NSError>) -> Void) {
-        self.fetchData(target: .upcoming, responseClass: [Movie].self) { result  in
+    func upcoming(page:Int, completionHandler: @escaping (Result<GenericResponse<[Movie]>, NSError>) -> Void) {
+        self.fetchData(target: .upcoming(page: page), responseClass: [Movie].self) { result  in
             completionHandler(result)
         }
     }
     
     func nowPlaying(completionHandler: @escaping (Result<GenericResponse<[Movie]>, NSError>) -> Void) {
-        self.fetchData(target: .upcoming, responseClass: [Movie].self) { result  in
+        self.fetchData(target: .nowPlaying, responseClass: [Movie].self) { result  in
             completionHandler(result)
         }
     }

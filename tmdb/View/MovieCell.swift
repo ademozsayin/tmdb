@@ -102,3 +102,4 @@ class MovieCell: UITableViewCell {
 extension MovieCell {
     static let identifier = "MovieCell"
 }
+

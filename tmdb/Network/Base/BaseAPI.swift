@@ -50,7 +50,7 @@ class BaseAPI<T:TargetType> {
                     completionHandler(.failure(NSError()))
                     return
                 }
-                print(jsonResponse)
+//                print(jsonResponse)
 
                 guard let theJSONData = try? JSONSerialization.data(withJSONObject: jsonResponse, options: []) else {
                     print("theJSONData error")

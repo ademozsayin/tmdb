@@ -39,6 +39,7 @@
 		0D2136E12782707D000C164A /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2136E02782707D000C164A /* Appearance.swift */; };
 		0D2136E3278271E9000C164A /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2136E2278271E9000C164A /* MovieDetailView.swift */; };
 		0D2136E5278315C0000C164A /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2136E4278315C0000C164A /* RateView.swift */; };
+		0D2136E7278356CC000C164A /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2136E6278356CC000C164A /* LoadingCell.swift */; };
 		307CC1B0FC903FA1D34BBDFE /* Pods_tmdb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6529B5F1F696D51E757B0F26 /* Pods_tmdb.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		0D2136E02782707D000C164A /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		0D2136E2278271E9000C164A /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		0D2136E4278315C0000C164A /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
+		0D2136E6278356CC000C164A /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		42C0C39E07C67B2DD8F782C6 /* Pods-tmdb.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tmdb.release.xcconfig"; path = "Target Support Files/Pods-tmdb/Pods-tmdb.release.xcconfig"; sourceTree = "<group>"; };
 		6529B5F1F696D51E757B0F26 /* Pods_tmdb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tmdb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A70A798059B29AF10B08023 /* Pods-tmdb.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tmdb.production.xcconfig"; path = "Target Support Files/Pods-tmdb/Pods-tmdb.production.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				0D2136DC27826438000C164A /* HeaderCollectionViewCell.swift */,
 				0D2136E2278271E9000C164A /* MovieDetailView.swift */,
 				0D2136E4278315C0000C164A /* RateView.swift */,
+				0D2136E6278356CC000C164A /* LoadingCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				0D2136E3278271E9000C164A /* MovieDetailView.swift in Sources */,
 				0D21369627820CA8000C164A /* HTTPMethod.swift in Sources */,
 				0D2136A5278211E7000C164A /* Configuration.swift in Sources */,
+				0D2136E7278356CC000C164A /* LoadingCell.swift in Sources */,
 				0D21367927820A7A000C164A /* AppDelegate.swift in Sources */,
 				0D2136AD278219A5000C164A /* Extensions.swift in Sources */,
 				0D2136AB278214EA000C164A /* Movie.swift in Sources */,
