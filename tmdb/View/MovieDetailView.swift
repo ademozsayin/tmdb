@@ -7,9 +7,13 @@
 
 import UIKit
 
+protocol MovieDetailViewProtocol:AnyObject {
+    func imdbTapped(movie:Movie)
+}
+
 class MovieDetailView: UIView {
 
-//    var scrollView = UIScrollView()
+    weak var delegate:MovieDetailViewProtocol? = nil
     var poster = UIImageView()
     var title = UILabel()
     
@@ -41,6 +45,8 @@ class MovieDetailView: UIView {
 
         return label
     }()
+    
+    var movie:Movie?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -90,6 +96,9 @@ class MovieDetailView: UIView {
         contentView.addSubview(imdb)
         imdb.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 16).isActive = true
         imdb.topAnchor.constraint(equalTo: poster.bottomAnchor,constant: 16).isActive = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imdbTapped))
+        imdb.isUserInteractionEnabled = true
+        imdb.addGestureRecognizer(tapGestureRecognizer)
 
         rateView = RateView()
         rateView.translatesAutoresizingMaskIntoConstraints = false
@@ -131,6 +140,7 @@ class MovieDetailView: UIView {
     }
     
     func setDetail(_ movie:Movie){
+        self.movie = movie
         self.titleLabel.text = movie.niceTitle()
         self.subtitleLabel.text = movie.overview
         self.rateView.setData(txt: movie.voteAverage)
@@ -138,6 +148,12 @@ class MovieDetailView: UIView {
         if let poster = movie.backdropPath  {
             let path = "https://image.tmdb.org/t/p/w500" + poster
             self.poster.download(url: path)
+        }
+    }
+    
+    @objc func imdbTapped(){
+        if let delegate = delegate, let movie = self.movie {
+            delegate.imdbTapped(movie: movie)
         }
     }
 }

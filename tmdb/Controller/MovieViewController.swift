@@ -9,6 +9,7 @@ import UIKit
 
 class MovieViewController: UIViewController {
 
+    // MARK: - VARS
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,15 +20,12 @@ class MovieViewController: UIViewController {
         view.register(MovieCell.self, forCellReuseIdentifier: MovieCell.identifier)
         view.register(LoadingCell.self, forCellReuseIdentifier: LoadingCell.identifier)
         view.register(MovieHeader.self, forHeaderFooterViewReuseIdentifier: MovieHeader.identifier)
-
         view.delegate = self
         view.dataSource = self
-        
         return view
     }()
     
     let refreshControl = UIRefreshControl()
-    private let downloader = ImageDownloader()
     var pageIndex: Int = 1
     var totalpages:Int = 0
     var isLoading:Bool = false
@@ -36,8 +34,10 @@ class MovieViewController: UIViewController {
             print(movies.count)
         }
     }
+    
     var nowPlaying:[Movie] = []
     
+    // MARK: - LIFECYCLES
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
@@ -51,13 +51,14 @@ class MovieViewController: UIViewController {
 
     }
     
+    // MARK: - NOW PLAYING REQ
     private func fetchPlaying() {
-        MovieAPI().nowPlaying { result in
+        MovieAPI().nowPlaying { [ weak self] result in
             switch result {
             case .success(let res):
-                self.nowPlaying = res.data ?? []
+                self?.nowPlaying = res.data ?? []
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
             case .failure(let err):
               print(err)
@@ -65,31 +66,33 @@ class MovieViewController: UIViewController {
         }
     }
     
-    
+    // MARK: - Fetch Upcoming  movies
     private func fetchUpcoming(page:Int, isRefresh:Bool) {
         isLoading = true
-        MovieAPI().upcoming(page:page) { result  in
+        MovieAPI().upcoming(page:page) { [weak self] result  in
             switch result {
             case .success(let res):
                 if isRefresh {
-                    self.movies = res.data ?? []
-                    self.totalpages = res.totalPages ?? 1
+                    self?.movies = res.data ?? []
+                    self?.totalpages = res.totalPages ?? 1
                 } else {
-                    self.movies.append(contentsOf: res.data ?? [])
-                    self.totalpages = res.totalPages ?? 1
+                    self?.movies.append(contentsOf: res.data ?? [])
+                    self?.totalpages = res.totalPages ?? 1
                 }
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.refreshControl.endRefreshing()
-                    self.isLoading = false
-                    self.tableView.reloadData()
+                    self?.refreshControl.endRefreshing()
+                    self?.isLoading = false
+                    self?.tableView.reloadData()
                 }
             case .failure(let err):
-              print(err)
+              debugPrint(err)
+                self?.alert(message: err.localizedDescription, title: "Opps!")
             }
         }
     }
     
+    // MARK: - Moview Detail page redirect
     private func showDetails(_ movie:Movie?) {
         guard let movie = movie else { return }
         let vc = MovieDetailsViewController()
@@ -98,10 +101,14 @@ class MovieViewController: UIViewController {
         
     }
     
+    // MARK: - Pull to refresh
     @objc func refresh(_ sender: AnyObject) {
         fetchUpcoming(page: 1, isRefresh:true)
     }
 }
+
+// MARK: - UI
+
 extension MovieViewController {
     private func setupView() {
         view.addSubview(tableView)
@@ -130,7 +137,6 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: MovieCell.identifier, for: indexPath) as! MovieCell
@@ -148,8 +154,6 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
 //            cell.activityIndicator.startAnimating()
             return cell
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -174,9 +178,9 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if section == 0 {
-            return 256  // or whatever
+            return 256
         } else {
-            return 0  // or whatever
+            return 0
         }
     }
     
@@ -199,20 +203,14 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         if pageIndex < totalpages {
             let offsetY = scrollView.contentOffset.y
             let contentHeight = scrollView.contentSize.height
-            
             if offsetY > contentHeight - scrollView.frame.size.height {
-
                 pageIndex += 1
-
                 fetchUpcoming(page: pageIndex,isRefresh: false)
-
             }
         } else {
             return
         }
-        
     }
-    
 }
 
 // MARK: - MovieHeaderProtocol
@@ -222,6 +220,5 @@ extension MovieViewController:MovieHeaderProtocol {
     func didTappedMovie(_ movie: Movie?) {
         showDetails(movie)
     }
-    
 }
 

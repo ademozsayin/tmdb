@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import SafariServices
 
 class MovieDetailsViewController: UIViewController {
 
@@ -49,6 +50,7 @@ class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         detailView = MovieDetailView()
+        detailView.delegate = self
         detailView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(detailView)
         detailView.topAnchor.constraint(equalTo: view.topAnchor,constant: ScreenUtils.statusBarHeight + topbarHeight).isActive = true
@@ -80,6 +82,16 @@ class MovieDetailsViewController: UIViewController {
             }
         }
     }
+}
 
-
+extension MovieDetailsViewController:MovieDetailViewProtocol {
+    func imdbTapped(movie: Movie) {
+        guard let imdbid = movie.imdbId else { return }
+        if let url = URL(string: "https://www.imdb.com/title/\(imdbid)") {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let vc = SFSafariViewController(url: url, configuration: config)
+            present(vc, animated: true)
+        }
+    }
 }
