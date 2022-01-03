@@ -46,12 +46,12 @@ class RateView: UIView {
         guard let rate = txt else { return }
         let rateString = "\(rate)"
         let defaultAttributes = [
-            .font: UIFont(name: "SFProRounded-Medium", size:  13.0),
+            .font: UIFont(name: "SFProRounded-Medium", size:  13.0) as Any,
             .foregroundColor: UIColor.black
         ] as [NSAttributedString.Key : Any]
 
         let marketingAttributes = [
-            .font: UIFont(name: "SFProRounded-Medium", size:  13.0),
+            .font: UIFont(name: "SFProRounded-Medium", size:  13.0) as Any,
             .foregroundColor: UIColor.init(hexString: "ADB5BD")
         ] as [NSAttributedString.Key : Any]
 

@@ -116,12 +116,19 @@ extension UIViewController {
 }
 
 extension UIApplication {
-    static var statusBarHeight: CGFloat {
-        if #available(iOS 13.0, *) {
-            let window = shared.windows.filter { $0.isKeyWindow }.first
-            return window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        }
-        return shared.statusBarFrame.height
+    var statusBarHeight: CGFloat {
+        connectedScenes
+            .compactMap {
+                $0 as? UIWindowScene
+            }
+            .compactMap {
+                $0.statusBarManager
+            }
+            .map {
+                $0.statusBarFrame
+            }
+            .map(\.height)
+            .max() ?? 0
     }
 }
 
@@ -135,7 +142,7 @@ struct ScreenUtils {
     }
     
     static var statusBarHeight: CGFloat {
-        return UIApplication.statusBarHeight
+        return UIApplication.shared.statusBarHeight
     }
 }
 
