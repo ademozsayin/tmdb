@@ -25,6 +25,7 @@ enum CustomResult<String>{
 
 class BaseAPI<T:TargetType> {
 
+    // generic reqs
     func fetchData<M: Decodable>(target: T, responseClass: M.Type, completionHandler:@escaping (Result<GenericResponse<M>, NSError>)-> Void) {
         
         let method = Alamofire.HTTPMethod(rawValue: target.method.rawValue)
@@ -74,7 +75,7 @@ class BaseAPI<T:TargetType> {
         }
     }
     
-    
+    // for non generic request
     func sendRequest<M: Decodable>(target: T, responseClass: M.Type, completionHandler:@escaping (Result<Movie,NSError>)-> Void) {
         
         let method = Alamofire.HTTPMethod(rawValue: target.method.rawValue)
