@@ -25,7 +25,7 @@ extension MovieNetworking: TargetType {
         case .upcoming(let page):
             return "movie/upcoming?api_key=\(Configuration.apiKey)&page=\(page)"
         case .nowPlaying:
-            return "movie/upcoming?api_key=\(Configuration.apiKey)"
+            return "movie/now_playing?api_key=\(Configuration.apiKey)"
         case .movieDetail(let id):
             return "movie/\(id)?api_key=\(Configuration.apiKey)"
         }

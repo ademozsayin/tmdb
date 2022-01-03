@@ -61,7 +61,7 @@ class MovieViewController: UIViewController {
                     self?.tableView.reloadData()
                 }
             case .failure(let err):
-              print(err)
+                self?.alert(message: err.localizedDescription, title: "Opps!")
             }
         }
     }
